@@ -1,4 +1,4 @@
-TARGET = simple nested
+TARGET = simple multiple nested
 
 all: $(TARGET)
 

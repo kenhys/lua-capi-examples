@@ -11,33 +11,29 @@ int main(void)
   luaL_openlibs(L);
 
   lua_newtable(L);
-  lua_newtable(L);
-  lua_newtable(L);
 
   lua_newtable(L);
+
   lua_pushstring(L, "Meow");
   lua_setfield(L, -2, "cat");
+
   lua_rawseti(L, -2, 0);
 
   lua_newtable(L);
+
   lua_pushstring(L, "Bow");
   lua_setfield(L, -2, "dog");
+
   lua_rawseti(L, -2, 1);
 
-  lua_setfield(L, -2, "animal");
   lua_setglobal(L, "table");
 
-  status = luaL_dostring(L, "print(table.animal)");
+  status = luaL_dostring(L, "print(table[0].cat)");
   if (status) {
     printf("Error: %s", lua_tostring(L, -1));
   }
 
-  status = luaL_dostring(L, "print(table.animal[0].cat)");
-  if (status) {
-    printf("Error: %s", lua_tostring(L, -1));
-  }
-
-  status = luaL_dostring(L, "print(table.animal[1].dog)");
+  status = luaL_dostring(L, "print(table[1].dog)");
   if (status) {
     printf("Error: %s", lua_tostring(L, -1));
   }
