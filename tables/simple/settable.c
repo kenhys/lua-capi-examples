@@ -31,17 +31,17 @@ int main(void)
   lua_settable(L, -3);
 
   /*
-    table => {
+    animal => {
       "cat" => "Meow"
       "dog" => "Bow"
     }
   */
-  lua_pushstring(L, "table");
+  lua_pushstring(L, "animal");
   lua_insert(L, -2);
   lua_settable(L, LUA_GLOBALSINDEX);
 
-  luaL_dostring(L, "print(table.cat)");
-  luaL_dostring(L, "print(table.dog)");
+  luaL_dostring(L, "print(animal.cat)");
+  luaL_dostring(L, "print(animal.dog)");
   lua_close(L);
   return 0;
 }
