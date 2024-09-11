@@ -36,10 +36,13 @@ int main(void)
       "dog" => "Bow"
     }
   */
-  lua_setglobal(L, "table");
+  lua_pushstring(L, "table");
+  lua_insert(L, -2);
+  lua_settable(L, LUA_GLOBALSINDEX);
 
   luaL_dostring(L, "print(table.cat)");
   luaL_dostring(L, "print(table.dog)");
+  lua_close(L);
   return 0;
 }
 
