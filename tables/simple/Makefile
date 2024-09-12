@@ -3,9 +3,7 @@ TARGET = settable setfield
 all: $(TARGET)
 
 .c: $(TARGET)
-	echo `pkg-config --libs luajit`
-	echo `pkg-config --cflags luajit`
-	gcc $< `pkg-config --cflags luajit` `pkg-config --libs luajit` -ldl -lm -o $@
+	gcc $< -I`luarocks config --lua-incdir` -L`luarocks config --lua-libdir` -llua -ldl -lm -o $@
 	./$@
 
 clean:
