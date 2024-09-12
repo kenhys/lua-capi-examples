@@ -8,6 +8,7 @@ all: $(TARGET) graph
 
 graph:
 	dot -Tpng -osettable.png settable.dot
+	dot -Tpng -osetfield.png setfield.dot
 
 clean:
 	rm -f $(TARGET)
