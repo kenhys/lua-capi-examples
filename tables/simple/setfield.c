@@ -52,7 +52,7 @@ int main(void)
   if (status) {
     printf("Error: %s", lua_tostring(L, -1));
   }
-  luaL_dostring(L, "inspect=require('inspect');print(inspect(animal))");
+  luaL_dostring(L, "local inspect=require('inspect');print(inspect(animal))");
   lua_close(L);
   return 0;
 }
