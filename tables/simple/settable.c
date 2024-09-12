@@ -42,6 +42,7 @@ int main(void)
 
   luaL_dostring(L, "print(animal.cat)");
   luaL_dostring(L, "print(animal.dog)");
+  luaL_dostring(L, "inspect=require('inspect');print(inspect(animal))");
   lua_close(L);
   return 0;
 }
