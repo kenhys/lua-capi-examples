@@ -63,52 +63,37 @@ int main(void)
   dump(L);
   lua_settable(L, -3); /* { animal => { cat => Meow }} */
   dump(L);
-#if 0
-  lua_getfield(L, -1, "animal");
-  if (LUA_TTABLE == lua_type(L, -1)) {
-    printf("DUMP: { animal => ... }\n");
-  }
-  lua_pop(L, 1);
-  dump(L);
-#endif
-  lua_setglobal(L, "table");
+  // do not register as table here
+  lua_setglobal(L, "sample");
   dump(L);
   /* can't inspect table correctly */
-  luaL_dostring(L, "inspect=require('inspect'); print(inspect(table))");
+  luaL_dostring(L, "inspect=require('inspect'); print(inspect(sample))");
 #else
   /* Use lua_insert */
-  /*
-    {
-    "cat" => "Meow"
-    }
-  */
   lua_pushstring(L, "cat"); /* {}, cat */
   lua_pushstring(L, "Meow"); /* {}, cat, Meow */
   lua_settable(L, -3); /* { cat = Meow } */
 
-  /*
-    animal => {
-      "cat" => "Meow"
-    }
-  */
   lua_pushstring(L, "animal"); /* { ... }, animal */
   lua_insert(L, -2); /* animal, { ... } */
 
   /*
     { animal => { "cat" => "Meow" } }
    */
+  dump(L);
   lua_newtable(L); /* animal, {...}, {} */
   dump(L);
   lua_insert(L, -3); /* {}, animal, {...} */
   lua_settable(L, -3);
   dump(L);
 
-  lua_pushstring(L, "table"); /* {}, table */
+  /* do not name 'table' */
+  lua_pushstring(L, "sample"); /* {}, table */
   dump(L);
-  lua_insert(L, -2);
+  lua_insert(L, -2); /* table, {...} */
   lua_settable(L, LUA_GLOBALSINDEX);
 
-  luaL_dostring(L, "inspect=require('inspect');print(inspect(table))");
+  luaL_dostring(L, "inspect=require('inspect');print(inspect(sample))");
 
 #endif
   lua_close(L);
