@@ -1,0 +1,41 @@
+strict digraph {
+
+    rankdir=LR;
+    node [shape=none,fontname=ubuntu];
+
+    step0 [shape=none, label=<<table border="0" cellspacing="0">
+    <tr><td></td><td border="1" style="rounded" bgcolor="lightblue">初期状態</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td> 0</td><td border="1" style="dashed">　　　　　</td></tr>
+    </table>>];
+
+    step1 [shape=none, label=<<table border="0" cellspacing="0">
+    <tr><td></td><td border="1" style="rounded" bgcolor="lightblue">テーブルを作成した</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td> 0</td><td border="1" style="dotted">　　　　　</td></tr>
+    <tr><td>-1</td><td border="1" align="center">{テーブル}</td></tr>
+    </table>>];
+
+    step2 [shape=none, label=<<table border="0" cellspacing="0" align="center">
+    <tr><td></td><td border="1" style="rounded" bgcolor="lightblue">Meowを積んだ</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td> 0</td><td border="1" style="dotted">　　　　　</td></tr>
+    <tr><td>-1</td><td border="1">Meow</td></tr>
+    <tr><td>-2</td><td border="1">{テーブル}</td></tr>
+    </table>>];
+
+    step3 [shape=none, label=<<table border="0" cellspacing="0" align="center">
+    <tr><td></td><td border="1" style="rounded" bgcolor="lightblue">catとMeowをペアに</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td></td><td>　</td></tr>
+    <tr><td> 0</td><td border="1" style="dotted">　　　　　</td></tr>
+    <tr><td>-1</td><td border="1">{ cat = "Meow" }</td></tr>
+    </table>>];
+
+    step0 -> step1 [label="lua_newtable(L)"];
+    step1 -> step2 [label="lua_pushstring(L, 'Meow')"];
+    step2 -> step3 [label="lua_setfield(L, -2, 'cat')"];
+}
