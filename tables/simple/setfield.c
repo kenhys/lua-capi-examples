@@ -35,19 +35,20 @@ int main(void)
       "dog" => "Bow",
     }
   */
-  lua_pushstring(L, "table");
+  lua_pushstring(L, "animal");
   lua_insert(L, -2); // align "table", {} order
   lua_settable(L, LUA_GLOBALSINDEX);
 
-  status = luaL_dostring(L, "print(table.cat)");
+  status = luaL_dostring(L, "print(animal.cat)");
   if (status) {
     printf("Error: %s", lua_tostring(L, -1));
   }
 
-  status = luaL_dostring(L, "print(table.dog)");
+  status = luaL_dostring(L, "print(animal.dog)");
   if (status) {
     printf("Error: %s", lua_tostring(L, -1));
   }
+  luaL_dostring(L, "inspect=require('inspect');print(inspect(animal))");
   lua_close(L);
   return 0;
 }
