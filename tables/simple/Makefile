@@ -12,3 +12,4 @@ graph:
 
 clean:
 	rm -f $(TARGET)
+	rm -f *.png
