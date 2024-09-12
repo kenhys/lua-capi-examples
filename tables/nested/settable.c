@@ -3,6 +3,8 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
+#define BLOG20201111 1
+
 void dump(lua_State *L)
 {
   int size = lua_gettop(L);
@@ -32,7 +34,7 @@ int main(void)
   luaL_openlibs(L);
   lua_newtable(L);
 
-#if 1
+#if BLOG20201111
   /* Originally problem: https://www.clear-code.com/blog/2020/11/11.html */
   lua_pushstring(L, "animal"); /* {}, animal */
   lua_newtable(L); /* {}, animial, {} */
