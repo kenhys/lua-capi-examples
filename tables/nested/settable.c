@@ -3,7 +3,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-#define BLOG20201111 1
+#define BLOG20201111 0
 
 void dump(lua_State *L)
 {
@@ -45,9 +45,18 @@ int main(void)
   dump(L);
   lua_settable(L, -3); /* { animal => { cat => Meow }} */
   dump(L);
+#if 0
+  lua_getfield(L, -1, "animal");
+  if (LUA_TTABLE == lua_type(L, -1)) {
+    printf("DUMP: { animal => ... }\n");
+  }
+  lua_pop(L, 1);
+  dump(L);
+#endif
   lua_setglobal(L, "table");
   dump(L);
-  luaL_dostring(L, "local inspect=require('inspect'); print(inspect(table))");
+  /* can't inspect table correctly */
+  luaL_dostring(L, "inspect=require('inspect'); print(inspect(table))");
 #else
   /* Use lua_insert */
   /*
@@ -55,30 +64,33 @@ int main(void)
     "cat" => "Meow"
     }
   */
-  lua_pushstring(L, "cat");
-  lua_pushstring(L, "Meow");
-  lua_settable(L, -3);
+  lua_pushstring(L, "cat"); /* {}, cat */
+  lua_pushstring(L, "Meow"); /* {}, cat, Meow */
+  lua_settable(L, -3); /* { cat = Meow } */
 
   /*
     animal => {
       "cat" => "Meow"
     }
   */
-  lua_pushstring(L, "animal");
-  lua_insert(L, -2); /* animal, {} */
+  lua_pushstring(L, "animal"); /* { ... }, animal */
+  lua_insert(L, -2); /* animal, { ... } */
 
   /*
     { animal => { "cat" => "Meow" } }
    */
-  lua_newtable(L); /* animal, {}, {} */
-  lua_insert(L, -3); /* {}, animal, {} */
+  lua_newtable(L); /* animal, {...}, {} */
+  dump(L);
+  lua_insert(L, -3); /* {}, animal, {...} */
   lua_settable(L, -3);
+  dump(L);
 
   lua_pushstring(L, "table"); /* {}, table */
+  dump(L);
   lua_insert(L, -2);
   lua_settable(L, LUA_GLOBALSINDEX);
 
-  luaL_dostring(L, "local inspect=require('inspect'); print(inspect(table))");
+  luaL_dostring(L, "inspect=require('inspect');print(inspect(table))");
 
 #endif
   lua_close(L);
