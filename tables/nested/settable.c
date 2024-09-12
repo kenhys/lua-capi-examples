@@ -3,7 +3,7 @@
 #include <lauxlib.h>
 #include <lualib.h>
 
-#define BLOG20201111 0
+#define BLOG20201111 1
 
 void dump(lua_State *L)
 {
