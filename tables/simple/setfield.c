@@ -35,9 +35,13 @@ int main(void)
       "dog" => "Bow",
     }
   */
+#if 1
+  lua_setglobal(L, "animal");
+#else
   lua_pushstring(L, "animal");
   lua_insert(L, -2); // align "table", {} order
   lua_settable(L, LUA_GLOBALSINDEX);
+#endif
 
   status = luaL_dostring(L, "print(animal.cat)");
   if (status) {
