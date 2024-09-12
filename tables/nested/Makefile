@@ -1,4 +1,4 @@
-TARGET = setfield
+TARGET = setfield settable
 
 all: $(TARGET)
 
