@@ -20,14 +20,24 @@ void dump(lua_State *L)
       printf("%s\n", lua_tostring(L, i));
       break;
     case LUA_TTABLE:
-      printf("{}\n");
+      int count = 0;
       /* dump table */
       lua_pushnil(L);
       while (lua_next(L, i) != 0) {
-        printf("(%s) %s - (%s) %s\n",
-               lua_typename(L, lua_type(L, -2)), lua_tostring(L, -2), lua_typename(L, lua_type(L, -1)), lua_tostring(L, -1));
+        count++;
+        if (count == 1) printf("{");
+        printf(" (%s) %s => (%s) %s ",
+               lua_typename(L, lua_type(L, -2)),
+               lua_tostring(L, -2),
+               lua_typename(L, lua_type(L, -1)),
+               lua_tostring(L, -1));
         // pop only value, reuse key
         lua_pop(L, 1);
+      }
+      if (count == 0) {
+        printf("{}\n");
+      } else {
+        printf("}\n");
       }
       break;
     }
